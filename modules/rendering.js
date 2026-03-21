@@ -1,5 +1,7 @@
 import { commentsArr } from './comments.js'
 import { initLikeAction, initAnsverAction } from './actions.js'
+import { formatDate } from './utils.js'
+
 const commentFeed = document.querySelector('.comments')
 
 export function renderComments() {
@@ -10,11 +12,11 @@ export function renderComments() {
 
   const allCommentsHtml = commentsArr
     .map(
-      (el, index) => `
+      (el) => `
   <li class="comment">
     <div class="comment-header">
-      <div>${el.name}</div>
-      <div>${el.date}</div>
+      <div>${el.author.name}</div>
+      <div>${formatDate(el.date)} </div>
     </div>
     <div class="comment-body">
       <div class="comment-text">
@@ -24,7 +26,7 @@ export function renderComments() {
     <div class="comment-footer">
       <div class="likes">
         <span class="likes-counter">${el.likes}</span>
-        <button data-index="${index}" class="like-button${el.isLiked ? ' -active-like' : ''}"></button>
+        <button data-index="${el.id}" class="like-button${el.isLiked ? ' -active-like' : ''}"></button>
       </div>
     </div>
   </li>`,

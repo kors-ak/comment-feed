@@ -9,7 +9,7 @@ export const textField = document.querySelector('.add-form-text')
 export function postNewComment() {
   buttonEl.addEventListener('click', () => {
     const currentDate = new Date()
-    const dateStr = `${formatDate(currentDate)} ${currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+    const dateStr = `${formatDate(currentDate)}`
     let name = sanitizeHtml(nameField.value)
     let text = sanitizeHtml(textField.value)
       .replace(/(\n){3,}/g, '\n\n')
