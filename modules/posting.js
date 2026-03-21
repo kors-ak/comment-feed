@@ -1,15 +1,14 @@
-import { sanitizeHtml, formatDate } from './utils.js'
-import { commentsArr } from './comments.js'
+import { sanitizeHtml } from './utils.js'
 import { renderComments } from './rendering.js'
+import { updateCommentsArr } from './comments.js'
 
 const buttonEl = document.querySelector('.add-form-button')
 const nameField = document.querySelector('.add-form-name')
+
 export const textField = document.querySelector('.add-form-text')
 
 export function postNewComment() {
   buttonEl.addEventListener('click', () => {
-    const currentDate = new Date()
-    const dateStr = `${formatDate(currentDate)}`
     let name = sanitizeHtml(nameField.value)
     let text = sanitizeHtml(textField.value)
       .replace(/(\n){3,}/g, '\n\n')
@@ -17,12 +16,12 @@ export function postNewComment() {
 
     let hasError = false
 
-    if (name.trim().length === 0) {
+    if (name.trim().length < 3) {
       hasError = true
       nameField.classList.add('error')
       nameField.value = ''
     }
-    if (text.trim().length === 0) {
+    if (text.trim().length < 3) {
       hasError = true
       textField.classList.add('error')
       textField.value = ''
@@ -30,16 +29,28 @@ export function postNewComment() {
 
     if (!hasError) {
       const newComment = {
-        name: name,
-        date: dateStr,
         text: text,
-        isLiked: false,
-        likes: 0,
+        name: name,
       }
-      commentsArr.push(newComment)
+
+      fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+      })
+        .then((response) => {
+          console.log('Статус ответа:', response.status)
+          return response.json()
+        })
+        .then((data) => {
+          console.log('Ответ сервера:', data)
+          updateCommentsArr(data.comments)
+          renderComments()
+        })
+        .catch((error) => {
+          console.error('Ошибка:', error)
+        })
       nameField.value = ''
       textField.value = ''
-      renderComments()
     }
   })
 

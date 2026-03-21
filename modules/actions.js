@@ -5,7 +5,7 @@ import { textField } from './posting.js'
 export function initLikeAction() {
   const likeButtons = document.querySelectorAll('.like-button')
   for (const btn of likeButtons) {
-    const comment = commentsArr[btn.dataset.index]
+    const comment = commentsArr[btn.dataset.id]
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation()

@@ -1,9 +1,8 @@
-export const sanitizeHtml = (string) => {
+export const sanitizeHtml = (string) =>
   String(string)
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
-}
 
 export const formatDate = (data) => {
   const date = new Date(data)
