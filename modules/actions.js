@@ -5,7 +5,8 @@ import { textField } from './posting.js'
 export function initLikeAction() {
   const likeButtons = document.querySelectorAll('.like-button')
   for (const btn of likeButtons) {
-    const comment = commentsArr[btn.dataset.id]
+    const btnId = parseInt(btn.dataset.id, 10)
+    const comment = commentsArr.find((c) => c.id === btnId)
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation()
@@ -30,7 +31,7 @@ export function initAnsverAction() {
     const commentEl = commentsArr[i]
 
     comment.addEventListener('click', () => {
-      textField.value = `⮩ “ ${commentEl.text.replace(/⮩\s*“\s*[^”]*\s*”/g, '').trim()} ” \n\n${commentEl.name}, `
+      textField.value = `⮩ “ ${commentEl.text.replace(/⮩\s*“\s*[^”]*\s*”/g, '').trim()} ” \n\n${commentEl.author.name}, `
     })
   }
 }
