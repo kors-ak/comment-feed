@@ -1,5 +1,6 @@
 import { sanitizeHtml } from './utils.js'
 import { fetchAndRenderComments } from './comments.js'
+import { disableForm } from './loaders.js'
 
 const buttonEl = document.querySelector('.add-form-button')
 const nameField = document.querySelector('.add-form-name')
@@ -32,7 +33,7 @@ export function postNewComment() {
         name: name,
       }
 
-      buttonEl.disabled = true
+      disableForm(true)
 
       fetch('https://wedev-api.sky.pro/api/v1/korsak/comments', {
         method: 'POST',
@@ -43,9 +44,9 @@ export function postNewComment() {
           return fetchAndRenderComments()
         })
         .then(() => {
+          disableForm(false)
           nameField.value = ''
           textField.value = ''
-          buttonEl.disabled = false
         })
         .catch((error) => {
           console.error('Ошибка:', error)

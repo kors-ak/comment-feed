@@ -196,3 +196,50 @@ body {
   box-shadow: 0 0 16px 3px rgba(229, 57, 53, 0.4);
   animation: shake 0.3s ease-in-out;
 }
+
+.formLoader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: 80px auto;
+  position: relative;
+  color: #fff;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow:
+      -38px -12px,
+      -14px 0,
+      14px 0,
+      38px 0;
+  }
+  33% {
+    box-shadow:
+      -38px 0px,
+      -14px -12px,
+      14px 0,
+      38px 0;
+  }
+  66% {
+    box-shadow:
+      -38px 0px,
+      -14px 0,
+      14px -12px,
+      38px 0;
+  }
+  100% {
+    box-shadow:
+      -38px 0,
+      -14px 0,
+      14px 0,
+      38px -12px;
+  }
+}
+
+.hidden {
+  display: none;
+}

@@ -1,5 +1,5 @@
 import { renderComments } from './rendering.js'
-import { hideLoader } from './loader.js'
+import { hideLoader } from './loaders.js'
 
 export let commentsArr = []
 
