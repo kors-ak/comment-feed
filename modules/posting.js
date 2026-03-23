@@ -1,6 +1,6 @@
 import { sanitizeHtml } from './utils.js'
 import { renderComments } from './rendering.js'
-import { getApiComments } from './comments.js'
+import { updateCommentsArr } from './comments.js'
 
 const buttonEl = document.querySelector('.add-form-button')
 const nameField = document.querySelector('.add-form-name')
@@ -39,11 +39,7 @@ export function postNewComment() {
       })
         .then((response) => {
           console.log('Статус ответа:', response.status)
-          return response.json()
-        })
-        .then((data) => {
-          console.log('Ответ сервера:', data.result)
-          return getApiComments()
+          return updateCommentsArr()
         })
         .then(() => {
           renderComments()

@@ -1,7 +1,7 @@
 import { renderComments } from './modules/rendering.js'
 import { postNewComment } from './modules/posting.js'
-import { getApiComments } from './modules/comments.js'
+import { updateCommentsArr } from './modules/comments.js'
 
-await getApiComments()
+await updateCommentsArr()
 renderComments()
 postNewComment()
