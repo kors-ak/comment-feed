@@ -1,16 +1,11 @@
-export const commentsArr = [
-  {
-    name: 'Глеб Фокин',
-    date: '12.02.22 12:18',
-    text: 'Это будет первый комментарий на этой странице',
-    isLiked: false,
-    likes: 3,
-  },
-  {
-    name: 'Варвара Н.',
-    date: '13.02.22 19:22',
-    text: 'Мне нравится как оформлена эта страница! ❤',
-    isLiked: true,
-    likes: 75,
-  },
-]
+export let commentsArr = []
+
+export const updateCommentsArr = (apiComments) => {
+  commentsArr = apiComments
+}
+
+export async function getApiComments() {
+  await fetch('https://wedev-api.sky.pro/api/v1/korsak/comments')
+    .then((response) => response.json())
+    .then((data) => updateCommentsArr(data.comments))
+}
