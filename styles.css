@@ -202,11 +202,21 @@ body {
   height: 12px;
   border-radius: 50%;
   display: block;
-  margin: 80px auto;
+  margin: 88px auto;
   position: relative;
-  color: #fff;
+  color: #bcec30;
   box-sizing: border-box;
   animation: animloader 1s linear infinite alternate;
+}
+
+.formLoader::before {
+  content: 'Комментарий добавляется';
+  position: absolute;
+  top: -48px;
+  left: -102px;
+  width: 240px;
+  font-size: 18px;
+  color: #fff;
 }
 
 @keyframes animloader {
