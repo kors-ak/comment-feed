@@ -35,7 +35,7 @@ export function postNewComment() {
 
       disableForm(true)
 
-      fetch('https://wedev-api.sky.pro/api/v1/korsak/comments', {
+      fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments', {
         method: 'POST',
         body: JSON.stringify(newComment),
       })

@@ -1,6 +1,7 @@
 import { commentsArr } from './comments.js'
 import { renderComments } from './rendering.js'
 import { textField } from './posting.js'
+import { delay } from './utils.js'
 
 export function initLikeAction() {
   const likeButtons = document.querySelectorAll('.like-button')
@@ -10,15 +11,39 @@ export function initLikeAction() {
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation()
-      if (comment.isLiked) {
-        comment.isLiked = false
-        comment.likes--
-      } else {
-        comment.isLiked = true
-        comment.likes++
-      }
+      if (btn.disabled) return
+      btn.disabled = true
+      btn.classList.add('-loading-like')
 
-      renderComments()
+      delay(1200)
+        .then(() => {
+          const wasLiked = comment.isLiked
+          if (wasLiked) {
+            comment.isLiked = false
+            comment.likes--
+          } else {
+            comment.isLiked = true
+            comment.likes++
+          }
+
+          renderComments()
+
+          const currentBtn = document.querySelector(
+            `.like-button[data-id="${btnId}"]`,
+          )
+          if (!wasLiked && comment.isLiked) {
+            currentBtn.classList.add('-active-like--animation')
+
+            setTimeout(() => {
+              currentBtn.classList.remove('-active-like--animation')
+            }, 500)
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+          btn.disabled = false
+          btn.classList.remove('-loading-like')
+        })
     })
   }
 }
