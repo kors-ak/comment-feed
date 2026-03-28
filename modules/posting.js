@@ -1,6 +1,6 @@
 import { sanitizeHtml } from './utils.js'
-import { renderComments } from './rendering.js'
-import { getApiComments } from './comments.js'
+import { fetchAndRenderComments } from './comments.js'
+import { disableForm } from './loaders.js'
 
 const buttonEl = document.querySelector('.add-form-button')
 const nameField = document.querySelector('.add-form-name')
@@ -8,7 +8,7 @@ const nameField = document.querySelector('.add-form-name')
 export const textField = document.querySelector('.add-form-text')
 
 export function postNewComment() {
-  buttonEl.addEventListener('click', async () => {
+  buttonEl.addEventListener('click', () => {
     let name = sanitizeHtml(nameField.value)
     let text = sanitizeHtml(textField.value)
       .replace(/(\n){3,}/g, '\n\n')
@@ -33,20 +33,18 @@ export function postNewComment() {
         name: name,
       }
 
-      fetch('https://wedev-api.sky.pro/api/v1/korsak/comments', {
+      disableForm(true)
+
+      fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments', {
         method: 'POST',
         body: JSON.stringify(newComment),
       })
         .then((response) => {
           console.log('Статус ответа:', response.status)
-          return response.json()
-        })
-        .then((data) => {
-          console.log('Ответ сервера:', data.result)
-          return getApiComments()
+          return fetchAndRenderComments()
         })
         .then(() => {
-          renderComments()
+          disableForm(false)
           nameField.value = ''
           textField.value = ''
         })

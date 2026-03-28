@@ -1,11 +1,15 @@
-export let commentsArr = []
+import { renderComments } from './rendering.js'
+import { hideLoader } from './loaders.js'
 
-export const updateCommentsArr = (apiComments) => {
-  commentsArr = apiComments
-}
+export const commentsArr = []
 
-export async function getApiComments() {
-  await fetch('https://wedev-api.sky.pro/api/v1/korsak/comments')
+export async function fetchAndRenderComments() {
+  return fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments')
     .then((response) => response.json())
-    .then((data) => updateCommentsArr(data.comments))
+    .then((data) => {
+      commentsArr.length = 0
+      commentsArr.push(...data.comments)
+      hideLoader()
+      return renderComments()
+    })
 }

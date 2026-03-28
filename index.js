@@ -1,7 +1,7 @@
-import { renderComments } from './modules/rendering.js'
+import { hideLoader } from './modules/loaders.js'
 import { postNewComment } from './modules/posting.js'
-import { getApiComments } from './modules/comments.js'
+import { fetchAndRenderComments } from './modules/comments.js'
 
-await getApiComments()
-renderComments()
+await fetchAndRenderComments()
+hideLoader()
 postNewComment()
