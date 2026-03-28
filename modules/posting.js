@@ -1,9 +1,9 @@
 import { sanitizeHtml } from './utils.js'
-import { fetchAndRenderComments } from './comments.js'
 import { disableForm } from './loaders.js'
+import { post } from './api-post.js'
 
-const buttonEl = document.querySelector('.add-form-button')
-const nameField = document.querySelector('.add-form-name')
+export const buttonEl = document.querySelector('.add-form-button')
+export const nameField = document.querySelector('.add-form-name')
 
 export const textField = document.querySelector('.add-form-text')
 
@@ -14,44 +14,13 @@ export function postNewComment() {
       .replace(/(\n){3,}/g, '\n\n')
       .trim()
 
-    let hasError = false
-
-    if (name.trim().length < 3) {
-      hasError = true
-      nameField.classList.add('error')
-      nameField.value = ''
-    }
-    if (text.trim().length < 3) {
-      hasError = true
-      textField.classList.add('error')
-      textField.value = ''
+    const newComment = {
+      text: text,
+      name: name,
     }
 
-    if (!hasError) {
-      const newComment = {
-        text: text,
-        name: name,
-      }
-
-      disableForm(true)
-
-      fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments', {
-        method: 'POST',
-        body: JSON.stringify(newComment),
-      })
-        .then((response) => {
-          console.log('Статус ответа:', response.status)
-          return fetchAndRenderComments()
-        })
-        .then(() => {
-          disableForm(false)
-          nameField.value = ''
-          textField.value = ''
-        })
-        .catch((error) => {
-          console.error('Ошибка:', error)
-        })
-    }
+    post(newComment)
+    disableForm(true)
   })
 
   nameField.addEventListener('input', () => {

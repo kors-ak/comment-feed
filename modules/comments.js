@@ -12,4 +12,5 @@ export async function fetchAndRenderComments() {
       hideLoader()
       return renderComments()
     })
+    .catch(() => console.error('Получить данные не удалось'))
 }
