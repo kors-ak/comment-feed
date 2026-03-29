@@ -17,6 +17,7 @@ export function postNewComment() {
     const newComment = {
       text: text,
       name: name,
+      forceError: true,
     }
 
     post(newComment)

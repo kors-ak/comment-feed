@@ -12,5 +12,11 @@ export async function fetchAndRenderComments() {
       hideLoader()
       return renderComments()
     })
-    .catch(() => console.error('Получить данные не удалось'))
+    .catch((error) => {
+      alert(
+        error.message === 'Failed to fetch'
+          ? 'Кажется, у вас сломался интернет, попробуйте позже'
+          : error.message,
+      )
+    })
 }
