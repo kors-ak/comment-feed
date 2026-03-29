@@ -2,7 +2,7 @@ import { fetchAndRenderComments } from './comments.js'
 import { disableForm } from './loaders.js'
 import { nameField, textField } from './posting.js'
 
-let tries = 1
+let serverErrorCount = 0
 
 export function post(obj) {
   fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments', {
@@ -10,6 +10,10 @@ export function post(obj) {
     body: JSON.stringify(obj),
   })
     .then(async (response) => {
+      if (response.status !== 500) {
+        serverErrorCount = 0
+      }
+
       if (response.status === 201) {
         return fetchAndRenderComments()
       } else {
@@ -25,12 +29,13 @@ export function post(obj) {
         }
 
         if (response.status === 500) {
-          if (tries >= 2) {
-            tries = 0
+          if (serverErrorCount >= 1) {
+            serverErrorCount = 0
             throw new Error('Сервер сломался, попробуй позже')
+          } else {
+            serverErrorCount++
+            return post(obj)
           }
-          tries++
-          return post(obj)
         }
 
         throw new Error('Что-то пошло не так')
