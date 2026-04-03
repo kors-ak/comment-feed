@@ -1,10 +1,10 @@
-export function hideLoader() {
-  const loader = document.querySelector('.loader')
-  loader.classList.remove('loader--active')
-}
-
 const formEl = document.querySelector('.add-form')
 const formLoader = document.querySelector('.formLoader')
+const loader = document.querySelector('.loader')
+
+export function hideLoader() {
+  loader.classList.remove('loader--active')
+}
 
 export function disableForm(state) {
   if (state) {

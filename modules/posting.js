@@ -1,57 +1,40 @@
 import { sanitizeHtml } from './utils.js'
-import { fetchAndRenderComments } from './comments.js'
 import { disableForm } from './loaders.js'
+import { post } from './api.js'
+import { updateComments } from './comments.js'
+import { renderComments } from './rendering.js'
 
-const buttonEl = document.querySelector('.add-form-button')
-const nameField = document.querySelector('.add-form-name')
+export const buttonEl = document.querySelector('.add-form-button')
+export const nameField = document.querySelector('.add-form-name')
 
 export const textField = document.querySelector('.add-form-text')
 
 export function postNewComment() {
-  buttonEl.addEventListener('click', () => {
+  buttonEl.addEventListener('click', async () => {
     let name = sanitizeHtml(nameField.value)
     let text = sanitizeHtml(textField.value)
       .replace(/(\n){3,}/g, '\n\n')
       .trim()
 
-    let hasError = false
+    disableForm(true)
 
-    if (name.trim().length < 3) {
-      hasError = true
-      nameField.classList.add('error')
-      nameField.value = ''
-    }
-    if (text.trim().length < 3) {
-      hasError = true
-      textField.classList.add('error')
-      textField.value = ''
-    }
-
-    if (!hasError) {
-      const newComment = {
-        text: text,
-        name: name,
-      }
-
-      disableForm(true)
-
-      fetch('https://wedev-api.sky.pro/api/v1/alina-korsak/comments', {
-        method: 'POST',
-        body: JSON.stringify(newComment),
+    post(text, name)
+      .then((data) => {
+        nameField.value = ''
+        textField.value = ''
+        updateComments(data)
+        return renderComments()
       })
-        .then((response) => {
-          console.log('Статус ответа:', response.status)
-          return fetchAndRenderComments()
-        })
-        .then(() => {
-          disableForm(false)
-          nameField.value = ''
-          textField.value = ''
-        })
-        .catch((error) => {
-          console.error('Ошибка:', error)
-        })
-    }
+      .catch((error) => {
+        alert(
+          error.message === 'Failed to fetch'
+            ? 'Кажется, у вас пропал интернет, попробуйте позже'
+            : error.message,
+        )
+      })
+      .finally(() => {
+        disableForm(false)
+      })
   })
 
   nameField.addEventListener('input', () => {
