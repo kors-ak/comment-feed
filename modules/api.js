@@ -1,5 +1,3 @@
-import { nameField, textField } from './posting.js'
-
 const server = 'https://wedev-api.sky.pro/api/v1/alina-korsak/comments'
 let serverErrorCount = 0
 
@@ -24,13 +22,6 @@ export function post(text, name) {
       return fetchComments()
     } else {
       if (response.status === 400) {
-        if (name.trim().length < 3) {
-          nameField.classList.add('error')
-        }
-        if (text.trim().length < 3) {
-          textField.classList.add('error')
-        }
-
         throw new Error('Имя и комментарий должны быть не короче 3 символов')
       }
 
