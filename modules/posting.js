@@ -1,6 +1,6 @@
 import { sanitizeHtml } from './utils.js'
 import { disableForm } from './loaders.js'
-import { post } from './api.js'
+import { fetchComments, post } from './api.js'
 import { updateComments } from './comments.js'
 import { renderComments } from './rendering.js'
 
@@ -17,14 +17,43 @@ export function postNewComment() {
 
     disableForm(true)
 
-    post(text, name)
-      .then((data) => {
-        nameField.value = ''
-        textField.value = ''
-        updateComments(data)
-        return renderComments()
-      })
-      .catch((error) => {
+    const maxRetries = 2
+    let retryCount = 0
+
+    makePostRequest()
+
+    async function makePostRequest() {
+      try {
+        const response = await post(text, name)
+
+        switch (response.status) {
+          case 201: {
+            nameField.value = ''
+            textField.value = ''
+
+            const data = await fetchComments()
+            updateComments(data)
+            renderComments()
+            break
+          }
+          case 400:
+            throw new Error(
+              'Имя и комментарий должны быть не короче 3 символов',
+            )
+          case 500:
+            retryCount++
+            if (retryCount < maxRetries) {
+              console.warn(
+                `Попытка ${retryCount} неудачна, повторяем запрос...`,
+              )
+              return makePostRequest()
+            } else {
+              throw new Error('Сервер недоступен, попробуйте позже')
+            }
+          default:
+            throw new Error('Что-то пошло не так')
+        }
+      } catch (error) {
         if (name.trim().length < 3) {
           nameField.classList.add('error')
         }
@@ -36,10 +65,10 @@ export function postNewComment() {
             ? 'Кажется, у вас пропал интернет, попробуйте позже'
             : error.message,
         )
-      })
-      .finally(() => {
+      } finally {
         disableForm(false)
-      })
+      }
+    }
   })
 
   nameField.addEventListener('input', () => {
