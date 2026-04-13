@@ -4,7 +4,7 @@ export async function fetchComments() {
   return fetch(server).then((response) => response.json())
 }
 
-export function post(text, name) {
+export function postComment(text, name) {
   return fetch(server, {
     method: 'POST',
     body: JSON.stringify({

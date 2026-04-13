@@ -1,6 +1,6 @@
 import { sanitizeHtml } from './utils.js'
 import { disableForm } from './loaders.js'
-import { fetchComments, post } from './api.js'
+import { fetchComments, postComment } from './api.js'
 import { updateComments } from './comments.js'
 import { renderComments } from './rendering.js'
 
@@ -24,7 +24,7 @@ export function postNewComment() {
 
     async function makePostRequest() {
       try {
-        const response = await post(text, name)
+        const response = await postComment(text, name)
 
         switch (response.status) {
           case 201: {
