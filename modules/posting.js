@@ -4,11 +4,11 @@ import { fetchComments, postComment } from './api.js'
 import { updateComments } from './comments.js'
 import { renderComments } from './rendering.js'
 
-export const buttonEl = document.querySelector('.add-form-button')
-export const nameField = document.querySelector('.add-form-name')
-export const textField = document.querySelector('.add-form-text')
-
 export function postNewComment() {
+  const buttonEl = document.querySelector('.add-form-button')
+  const nameField = document.querySelector('.add-form-name')
+  const textField = document.querySelector('.add-form-text')
+
   buttonEl.addEventListener('click', async () => {
     let name = sanitizeHtml(nameField.value)
     let text = sanitizeHtml(textField.value)
@@ -40,7 +40,6 @@ export function postNewComment() {
 
         switch (response.status) {
           case 201: {
-            nameField.value = ''
             textField.value = ''
 
             const data = await fetchComments()

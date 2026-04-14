@@ -110,18 +110,18 @@ body {
 }
 
 @keyframes rotating {
-   from {
-      transform: rotate(0deg);
-   }
-   25% {
-      transform: rotate(30deg);;
-   }
-   75% {
-      transform: rotate(-30deg);;
-   }
-   to {
-      transform: rotate(0deg);
-   }
+  from {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(30deg);
+  }
+  75% {
+    transform: rotate(-30deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 .-loading-like {
@@ -158,6 +158,17 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.unauthorized-text {
+  margin: 64px 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.unauthorized-text:hover {
+  opacity: 0.8;
+  text-shadow: 0 0 8px #7334ea;
 }
 
 .add-form {

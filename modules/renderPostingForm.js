@@ -1,4 +1,5 @@
-import { postNewComment } from './modules/posting.js'
+import { postNewComment } from './posting.js'
+import { userName } from './api.js'
 
 export function renderForm() {
   document.querySelector('.app').innerHTML = `
@@ -6,7 +7,8 @@ export function renderForm() {
       <input
         type="text"
         class="add-form-name"
-        placeholder="Введите ваше имя"
+        value="${userName}"
+        readonly
       />
       <textarea
         type="textarea"

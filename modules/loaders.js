@@ -1,5 +1,3 @@
-const formEl = document.querySelector('.add-form')
-const formLoader = document.querySelector('.formLoader')
 const loader = document.querySelector('.loader')
 
 export function hideLoader() {
@@ -7,6 +5,8 @@ export function hideLoader() {
 }
 
 export function disableForm(state) {
+  const formEl = document.querySelector('.add-form')
+  const formLoader = document.querySelector('.formLoader')
   if (state) {
     formEl.classList.add('hidden')
     formLoader.classList.remove('hidden')

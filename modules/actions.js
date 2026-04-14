@@ -1,6 +1,5 @@
 import { commentsArr } from './comments.js'
 import { renderComments } from './rendering.js'
-import { textField } from './posting.js'
 import { delay } from './utils.js'
 
 export function initLikeAction() {
@@ -56,7 +55,8 @@ export function initAnsverAction() {
     const commentEl = commentsArr[i]
 
     comment.addEventListener('click', () => {
-      textField.value = `⮩ “ ${commentEl.text.replace(/⮩\s*“\s*[^”]*\s*”/g, '').trim()} ” \n\n${commentEl.author.name}, `
+      document.querySelector('.add-form-text').value =
+        `⮩ “ ${commentEl.text.replace(/⮩\s*“\s*[^”]*\s*”/g, '').trim()} ” \n\n${commentEl.author.name}, `
     })
   }
 }

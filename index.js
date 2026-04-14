@@ -10,4 +10,6 @@ await fetchComments().then((data) => {
   return renderComments()
 })
 
-renderLogin()
+document
+  .querySelector('.unauthorized-text')
+  .addEventListener('click', renderLogin)

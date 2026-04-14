@@ -2,8 +2,10 @@ const server = 'https://wedev-api.sky.pro/api/v2/alina-korsak/comments'
 const serverUsers = ' https://wedev-api.sky.pro/api/user'
 
 let token = ''
+export let userName = ''
 
 export const updateToken = (newToken) => (token = newToken)
+export const updateUserName = (newName) => (userName = newName)
 
 export function registerUser(name, login, password) {
   return fetch(serverUsers, {
@@ -13,7 +15,7 @@ export function registerUser(name, login, password) {
       name,
       password,
     }),
-  }).then((response) => response.json())
+  })
 }
 
 export function loginUser(login, password) {
@@ -23,7 +25,7 @@ export function loginUser(login, password) {
       login,
       password,
     }),
-  }).then((response) => response.json())
+  })
 }
 
 export async function fetchComments() {
@@ -35,7 +37,6 @@ export function postComment(text, name) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       text,

@@ -1,9 +1,11 @@
+import { registerUser, updateToken, updateUserName } from './api.js'
+import { sanitizeHtml } from './utils.js'
 import { renderLogin } from './renderLogin.js'
+import { renderForm } from './renderPostingForm.js'
 
 export function renderRegistration() {
   document.querySelector('.app').innerHTML = `
     <div class="reg">
-      <p>Чтобы добавить комментарий, зарегистрируйтесь</p>
       <input
         type="text"
         class="input"
@@ -26,6 +28,30 @@ export function renderRegistration() {
       <p>Уже есть аккаунт? <span class="goto" id="goto-login">Авторизуйтесь</span></p>
     </div>
   `
+
+  const submitBtn = document.querySelector('.reg-button')
+
+  submitBtn.addEventListener('click', () => {
+    const name = sanitizeHtml(document.getElementById('reg-name').value)
+    const login = sanitizeHtml(document.getElementById('reg-login').value)
+    const password = sanitizeHtml(document.getElementById('reg-password').value)
+
+    registerUser(name, login, password)
+      .then((response) => {
+        if (response.status === 400) {
+          throw new Error('Пользователь с таким логином уже существует')
+        }
+        return response.json()
+      })
+      .then((data) => {
+        updateToken(data.user.token)
+        return updateUserName(data.user.name)
+      })
+      .then(() => renderForm())
+      .catch((error) => {
+        alert(error.message)
+      })
+  })
 
   document.getElementById('goto-login').addEventListener('click', renderLogin)
 }
