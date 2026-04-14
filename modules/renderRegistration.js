@@ -2,6 +2,7 @@ import { registerUser, updateToken, updateUserName } from './api.js'
 import { sanitizeHtml } from './utils.js'
 import { renderLogin } from './renderLogin.js'
 import { renderForm } from './renderPostingForm.js'
+import { renderComments } from './rendering.js'
 
 export function renderRegistration() {
   document.querySelector('.container').innerHTML = `
@@ -36,6 +37,11 @@ export function renderRegistration() {
     const login = sanitizeHtml(document.getElementById('reg-login').value)
     const password = sanitizeHtml(document.getElementById('reg-password').value)
 
+    if (name.trim().length < 3) {
+      alert('Имя должно быть не короче 3 символов')
+      return
+    }
+
     registerUser(name, login, password)
       .then((response) => {
         if (response.status === 400) {
@@ -47,7 +53,10 @@ export function renderRegistration() {
         updateToken(data.user.token)
         return updateUserName(data.user.name)
       })
-      .then(() => renderForm())
+      .then(() => {
+        renderComments()
+        renderForm()
+      })
       .catch((error) => {
         alert(error.message)
       })

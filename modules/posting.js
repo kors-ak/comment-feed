@@ -3,6 +3,7 @@ import { disableForm } from './loaders.js'
 import { fetchComments, postComment } from './api.js'
 import { updateComments } from './comments.js'
 import { renderComments } from './rendering.js'
+import { renderForm } from './renderPostingForm.js'
 
 export function postNewComment() {
   const buttonEl = document.querySelector('.add-form-button')
@@ -10,20 +11,13 @@ export function postNewComment() {
   const textField = document.querySelector('.add-form-text')
 
   buttonEl.addEventListener('click', async () => {
-    let name = sanitizeHtml(nameField.value)
     let text = sanitizeHtml(textField.value)
       .replace(/(\n){3,}/g, '\n\n')
       .trim()
 
-    if (name.trim().length < 3 || text.trim().length < 3) {
-      if (name.trim().length < 3) {
-        nameField.classList.add('error')
-      }
-      if (text.trim().length < 3) {
-        textField.classList.add('error')
-      }
-
-      alert('Имя и комментарий должны быть не короче 3 символов')
+    if (text.trim().length < 3) {
+      textField.classList.add('error')
+      alert('Комментарий должен быть не короче 3 символов')
       return
     }
 
@@ -45,6 +39,7 @@ export function postNewComment() {
             const data = await fetchComments()
             updateComments(data)
             renderComments()
+            renderForm()
             break
           }
           case 400:
