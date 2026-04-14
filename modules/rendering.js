@@ -1,6 +1,7 @@
 import { commentsArr } from './comments.js'
 import { initLikeAction, initAnsverAction } from './actions.js'
 import { formatDate } from './utils.js'
+import { hideLoader } from './loaders.js'
 
 const commentFeed = document.querySelector('.comments')
 
@@ -33,7 +34,14 @@ export function renderComments() {
     )
     .join('')
 
-  commentFeed.innerHTML = allCommentsHtml
+  document.querySelector('.container').innerHTML = `
+    <ul class="comments">${allCommentsHtml}</ul>
+    <span class="loader loader--active"></span>
+    <div class="app"><p class="unauthorized-text">Чтобы добавить комментарий, авторизуйтесь</p></div>
+    <span class="formLoader hidden"></span>
+  `
+
+  hideLoader()
 
   initLikeAction()
   initAnsverAction()

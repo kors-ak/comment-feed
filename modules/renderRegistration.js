@@ -4,7 +4,7 @@ import { renderLogin } from './renderLogin.js'
 import { renderForm } from './renderPostingForm.js'
 
 export function renderRegistration() {
-  document.querySelector('.app').innerHTML = `
+  document.querySelector('.container').innerHTML = `
     <div class="reg">
       <input
         type="text"

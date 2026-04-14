@@ -2,9 +2,10 @@ import { loginUser, updateToken, updateUserName } from './api.js'
 import { sanitizeHtml } from './utils.js'
 import { renderRegistration } from './renderRegistration.js'
 import { renderForm } from './renderPostingForm.js'
+import { renderComments } from './rendering.js'
 
 export function renderLogin() {
-  document.querySelector('.app').innerHTML = `
+  document.querySelector('.container').innerHTML = `
     <div class="login">
       <input
         type="text"
@@ -42,7 +43,10 @@ export function renderLogin() {
         updateToken(data.user.token)
         return updateUserName(data.user.name)
       })
-      .then(() => renderForm())
+      .then(() => {
+        renderComments()
+        renderForm()
+      })
       .catch((error) => {
         alert(error.message)
       })
