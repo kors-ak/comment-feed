@@ -15,6 +15,18 @@ export function postNewComment() {
       .replace(/(\n){3,}/g, '\n\n')
       .trim()
 
+    if (name.trim().length < 3 || text.trim().length < 3) {
+      if (name.trim().length < 3) {
+        nameField.classList.add('error')
+      }
+      if (text.trim().length < 3) {
+        textField.classList.add('error')
+      }
+
+      alert('Имя и комментарий должны быть не короче 3 символов')
+      return
+    }
+
     disableForm(true)
 
     const maxRetries = 2
@@ -54,12 +66,6 @@ export function postNewComment() {
             throw new Error('Что-то пошло не так')
         }
       } catch (error) {
-        if (name.trim().length < 3) {
-          nameField.classList.add('error')
-        }
-        if (text.trim().length < 3) {
-          textField.classList.add('error')
-        }
         alert(
           error.message === 'Failed to fetch'
             ? 'Кажется, у вас пропал интернет, попробуйте позже'

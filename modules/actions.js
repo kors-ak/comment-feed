@@ -6,8 +6,8 @@ import { delay } from './utils.js'
 export function initLikeAction() {
   const likeButtons = document.querySelectorAll('.like-button')
   for (const btn of likeButtons) {
-    const btnId = parseInt(btn.dataset.id, 10)
-    const comment = commentsArr.find((c) => c.id === btnId)
+    const btnId = btn.dataset.id
+    const comment = commentsArr.find((c) => String(c.id) === String(btnId))
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation()
