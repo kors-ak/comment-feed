@@ -161,6 +161,7 @@ body {
 }
 
 .unauthorized-text {
+  text-align: center;
   margin: 64px 0;
   cursor: pointer;
   transition: 0.2s;

@@ -2,6 +2,9 @@ import { commentsArr } from './comments.js'
 import { initLikeAction, initAnsverAction } from './actions.js'
 import { formatDate } from './utils.js'
 import { hideLoader } from './loaders.js'
+import { renderLogin } from './renderLogin.js'
+import { userName } from './api.js'
+import { renderForm } from './renderPostingForm.js'
 
 const commentFeed = document.querySelector('.comments')
 
@@ -40,9 +43,16 @@ export function renderComments() {
     <div class="app"><p class="unauthorized-text">Чтобы добавить комментарий, авторизуйтесь</p></div>
     <span class="formLoader hidden"></span>
   `
+  document
+    .querySelector('.unauthorized-text')
+    .addEventListener('click', renderLogin)
 
   hideLoader()
 
   initLikeAction()
   initAnsverAction()
+
+  if (userName) {
+    renderForm()
+  }
 }

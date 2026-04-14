@@ -2,7 +2,9 @@ const server = 'https://wedev-api.sky.pro/api/v2/alina-korsak/comments'
 const serverUsers = ' https://wedev-api.sky.pro/api/user'
 
 let token = ''
-export let userName = ''
+export let userName = localStorage.getItem('UserName')
+  ? localStorage.getItem('UserName')
+  : ''
 
 export const updateToken = (newToken) => (token = newToken)
 export const updateUserName = (newName) => (userName = newName)

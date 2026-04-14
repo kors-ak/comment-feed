@@ -51,7 +51,9 @@ export function renderRegistration() {
       })
       .then((data) => {
         updateToken(data.user.token)
-        return updateUserName(data.user.name)
+        updateUserName(data.user.name)
+
+        return localStorage.setItem('UserName', `${data.user.name}`)
       })
       .then(() => {
         renderComments()

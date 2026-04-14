@@ -20,7 +20,13 @@ export function renderForm() {
         <button class="add-form-button">Написать</button>
       </div>
     </div>
+    <p class="unauthorized-text">Выйти из аккаунта</p>
   `
 
   postNewComment()
+
+  document.querySelector('.unauthorized-text').addEventListener('click', () => {
+    localStorage.clear()
+    location.reload()
+  })
 }
