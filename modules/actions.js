@@ -1,13 +1,12 @@
 import { commentsArr } from './comments.js'
 import { renderComments } from './rendering.js'
-import { textField } from './posting.js'
 import { delay } from './utils.js'
 
 export function initLikeAction() {
   const likeButtons = document.querySelectorAll('.like-button')
   for (const btn of likeButtons) {
-    const btnId = parseInt(btn.dataset.id, 10)
-    const comment = commentsArr.find((c) => c.id === btnId)
+    const btnId = btn.dataset.id
+    const comment = commentsArr.find((c) => String(c.id) === String(btnId))
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation()
@@ -56,7 +55,8 @@ export function initAnsverAction() {
     const commentEl = commentsArr[i]
 
     comment.addEventListener('click', () => {
-      textField.value = `⮩ “ ${commentEl.text.replace(/⮩\s*“\s*[^”]*\s*”/g, '').trim()} ” \n\n${commentEl.author.name}, `
+      document.querySelector('.add-form-text').value =
+        `⮩ “ ${commentEl.text.replace(/⮩\s*“\s*[^”]*\s*”/g, '').trim()} ” \n\n${commentEl.author.name}, `
     })
   }
 }

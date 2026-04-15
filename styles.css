@@ -22,7 +22,9 @@ body {
 }
 
 .comment,
-.add-form {
+.add-form,
+.reg,
+.login {
   width: 596px;
   box-sizing: border-box;
   background: radial-gradient(
@@ -108,18 +110,18 @@ body {
 }
 
 @keyframes rotating {
-   from {
-      transform: rotate(0deg);
-   }
-   25% {
-      transform: rotate(30deg);;
-   }
-   75% {
-      transform: rotate(-30deg);;
-   }
-   to {
-      transform: rotate(0deg);
-   }
+  from {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(30deg);
+  }
+  75% {
+    transform: rotate(-30deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 .-loading-like {
@@ -156,6 +158,18 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.unauthorized-text {
+  text-align: center;
+  margin: 64px 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.unauthorized-text:hover {
+  opacity: 0.8;
+  text-shadow: 0 0 8px #7334ea;
 }
 
 .add-form {
@@ -285,4 +299,52 @@ body {
 
 .hidden {
   display: none;
+}
+
+.reg,
+.login {
+  width: fit-content;
+  padding: 16px 24px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  margin-top: 12px;
+  width: 280px;
+  padding: 16px 22px;
+  font-size: 16px;
+  font-family: Helvetica;
+  border-radius: 12px;
+  border: none;
+}
+
+.login-button,
+.reg-button {
+  width: fit-content;
+  min-width: 40%;
+  margin-top: 24px;
+  font-size: 20px;
+  padding: 12px 20px;
+  background-color: #bcec30;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.login-button,
+.reg-button:hover {
+  opacity: 0.9;
+}
+
+.goto {
+  color: #ceff73;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.goto:hover {
+  opacity: 0.9;
 }
