@@ -6,7 +6,7 @@ _Учебный проект по frontend-разработке_
 
 ## Демо
 
-https://kors-ak.github.io/webdev-dom-homework/
+https://kors-ak.github.io/comment-feed/
 
 ## Возможности
 
@@ -69,13 +69,13 @@ modules/
 1. Клонировать репозиторий:
 
 ```bash
-git clone https://github.com/kors-ak/webdev-dom-homework
+git clone https://github.com/kors-ak/comment-feed
 ```
 
 2. Перейти в папку проекта:
 
 ```bash
-cd webdev-dom-homework
+cd comment-feed
 ```
 
 3. Открыть `index.html` в браузере или запустить локальный сервер.
