@@ -1,5 +1,5 @@
 import { commentsArr } from './comments.js'
-import { initLikeAction, initAnsverAction } from './actions.js'
+import { initLikeAction, initAnswerAction } from './actions.js'
 import { formatDate } from './utils.js'
 import { hideLoader } from './loaders.js'
 import { renderLogin } from './renderLogin.js'
@@ -50,7 +50,7 @@ export function renderComments() {
   hideLoader()
 
   initLikeAction()
-  initAnsverAction()
+  initAnswerAction()
 
   if (userName) {
     renderForm()

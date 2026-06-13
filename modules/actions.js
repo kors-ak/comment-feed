@@ -47,7 +47,7 @@ export function initLikeAction() {
   }
 }
 
-export function initAnsverAction() {
+export function initAnswerAction() {
   const comments = document.querySelectorAll('.comment')
 
   for (let i = 0; i < comments.length; i++) {

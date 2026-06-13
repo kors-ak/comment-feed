@@ -13,7 +13,7 @@ export function renderForm() {
       <textarea
         type="textarea"
         class="add-form-text"
-        placeholder="Введите ваш коментарий"
+        placeholder="Введите ваш комментарий"
         rows="4"
       ></textarea>
       <div class="add-form-row">
